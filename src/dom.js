@@ -130,43 +130,48 @@ const forecastInfo = (weather) => {
 };
 
 const searchOtherMetrics = async () => {
-    const searchBtn = document.querySelector(".search-btn");
-    const searchInput = document.querySelector(".search-input");
+  const searchBtn = document.querySelector(".search-btn");
+  const searchInput = document.querySelector(".search-input");
 
-    searchBtn.addEventListener("click", async () => {
-        const location = searchInput.value;
-        try {
-            const weather = await locationsWeather(location);
-            updateOtherMetricsInfo(weather);
-        } catch (error) {
-            console.log(error);
-        }
-    });
+  searchBtn.addEventListener("click", async () => {
+    const location = searchInput.value;
+    try {
+      const weather = await locationsWeather(location);
+      updateOtherMetricsInfo(weather);
+    } catch (error) {
+      console.log(error);
+    }
+  });
 };
 
 const defaultOtherMetrics = async () => {
-    try {
-        const weather = await locationsWeather("New York");
-        updateOtherMetricsInfo(weather);
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    const weather = await locationsWeather("New York");
+    updateOtherMetricsInfo(weather);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const updateOtherMetricsInfo = (weather) => {
-    const container = document.querySelector(".container");
-    const otherMetricsInfoContainer = document.querySelector(".other-metrics-container");
-    if (otherMetricsInfoContainer) {
-        otherMetricsInfoContainer.remove();
-    }
-    const otherMetricsInfoContainerNew = createNewElement("div", "other-metrics-container");
-    otherMetricsInfoContainerNew.appendChild(otherMetricsInfo(weather));
-    container.appendChild(otherMetricsInfoContainerNew);
+  const container = document.querySelector(".container");
+  const otherMetricsInfoContainer = document.querySelector(
+    ".other-metrics-container"
+  );
+  if (otherMetricsInfoContainer) {
+    otherMetricsInfoContainer.remove();
+  }
+  const otherMetricsInfoContainerNew = createNewElement(
+    "div",
+    "other-metrics-container"
+  );
+  otherMetricsInfoContainerNew.appendChild(otherMetricsInfo(weather));
+  container.appendChild(otherMetricsInfoContainerNew);
 };
 
 const otherMetricsInfo = (weather) => {
-    const otherMetrics = createNewElement("div", "other-metrics");
-    otherMetrics.innerHTML = `
+  const otherMetrics = createNewElement("div", "other-metrics");
+  otherMetrics.innerHTML = `
         <div class="other-metrics__humidity">
             <h3 class="other-metrics__humidity-text">Humidity</h3>
             <h3 class="other-metrics__humidity-value">${weather.current.humidity}%</h3>
@@ -184,7 +189,7 @@ const otherMetricsInfo = (weather) => {
             <h3 class="other-metrics__pressure-value">${weather.current.pressure_mb} mb</h3>
         </div>
     `;
-    return otherMetrics;
+  return otherMetrics;
 };
 
 const setFooter = () => {

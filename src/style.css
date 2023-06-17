@@ -30,12 +30,13 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  overflow: hidden;
 }
 
 .container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 60px 0.5fr 1fr 60px;
+  grid-template-rows: 60px 0.5fr 1fr 64px;
   grid-template-areas:
     "header header"
     "main main"
@@ -55,6 +56,28 @@ body {
   font-size: 1rem;
 }
 
+.search-btn {
+  width: 50px;
+  height: 50px;
+}
+
+.search-btn:hover {
+  cursor: pointer;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 input {
   background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(8px);
@@ -65,6 +88,7 @@ input {
   outline: none;
   padding: 10px;
   font-size: 16px;
+  width: 300px;
   transition: border-color 0.3s ease;
 }
 
