@@ -1,5 +1,4 @@
 const createIMG = document.createElement("img");
-// set it ass bodys background img
 const body = document.querySelector("body");
 
 async function BGsetter() {
