@@ -133,6 +133,9 @@ input::placeholder {
   border-radius: 8px;
   margin: 1rem;
   backdrop-filter: blur(7px);
+  width: 80%;
+  justify-self: center;
+  align-self: center;
 }
 
 .forecast {
@@ -154,6 +157,41 @@ input::placeholder {
 
 .forecast__day:last-child {
   border-bottom: none;
+}
+
+.other-metrics-container {
+  grid-area: other;
+  padding: 2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  margin: 1rem;
+  width: 80%;
+  justify-self: center;
+  align-self: center;
+}
+
+.other-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1.5rem;
+  grid-template-areas:
+    "humidity wind"
+    "pressure visibility";
+}
+
+.other-metrics__humidity,
+.other-metrics__wind,
+.other-metrics__pressure,
+.other-metrics__uv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  padding: 1rem;
+  backdrop-filter: blur(7px);
 }
 
 .footer {
