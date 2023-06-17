@@ -31,10 +31,19 @@ body {
   background-position: center center;
 }
 
+.container {
+    
+}
+
 footer {
-    grid-area: footer;
+  grid-area: footer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
   background-color: transparent;
   color: #fff;
   padding: 2rem 0;
   text-align: center;
+  backdrop-filter: blur(7px);
 }

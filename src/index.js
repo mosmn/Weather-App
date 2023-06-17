@@ -1,12 +1,16 @@
-import "./style.css";
-const createIMG = document.createElement("img");
-const body = document.querySelector("body");
 //key=GCTCkoH8uFr2pPeJJWq3CMpzQBn6Ibtv
 // key=c40142647fab4af380442559231506
-async function BGsetter() {
+import "./style.css";
+
+const createIMG = document.createElement("img");
+createIMG.classList.add("bg-img");
+
+const body = document.querySelector("body");
+
+const BGsetter = async (condition = "Fog") =>{
   try {
     const response = await fetch(
-      "https://api.giphy.com/v1/gifs/t7Qb8655Z1VfBGr5XB?api_key=GCTCkoH8uFr2pPeJJWq3CMpzQBn6Ibtv",
+      `https://api.giphy.com/v1/gifs/translate?key=GCTCkoH8uFr2pPeJJWq3CMpzQBn6Ibtv&s=${condition}`,
       { mode: "cors" }
     );
     const cat = await response.json();
@@ -25,29 +29,14 @@ const locationsWeather = async (location) => {
     );
     const weather = await response.json();
     console.log(weather);
+    return weather;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 BGsetter();
-locationsWeather("London");
-locationsWeather("new york");
-locationsWeather("abu dhabi");
-
-// Write the functions that process the JSON data you’re getting from the API and return an object with only the data you require for your app.
-// data needed:
-// 10 day forecast
-// current weather
-// location
-// precipitation
-// wind
-// humidity
-// feels like
-// visibility
-// uv index
-// sunrise
-// sunset
+console.log(locationsWeather("London"));
 
 
 export { BGsetter, locationsWeather };
