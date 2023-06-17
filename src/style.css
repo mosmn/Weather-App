@@ -30,3 +30,11 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
 }
+
+footer {
+    grid-area: footer;
+  background-color: transparent;
+  color: #fff;
+  padding: 2rem 0;
+  text-align: center;
+}
