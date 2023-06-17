@@ -1,5 +1,3 @@
-import "./style.css";
-
 const BGsetter = async (condition) => {
   const createIMG = document.createElement("img");
   createIMG.classList.add("bg-img");
