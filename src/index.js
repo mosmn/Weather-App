@@ -1,13 +1,9 @@
-//key=GCTCkoH8uFr2pPeJJWq3CMpzQBn6Ibtv
-// key=c40142647fab4af380442559231506
 import "./style.css";
 
-const createIMG = document.createElement("img");
-createIMG.classList.add("bg-img");
-
-const body = document.querySelector("body");
-
-const BGsetter = async (condition = "Fog") =>{
+const BGsetter = async (condition) => {
+  const createIMG = document.createElement("img");
+  createIMG.classList.add("bg-img");
+  const body = document.querySelector("body");
   try {
     const response = await fetch(
       `https://api.giphy.com/v1/gifs/translate?key=GCTCkoH8uFr2pPeJJWq3CMpzQBn6Ibtv&s=${condition}`,
@@ -19,7 +15,7 @@ const BGsetter = async (condition = "Fog") =>{
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 const locationsWeather = async (location) => {
   try {
@@ -34,7 +30,5 @@ const locationsWeather = async (location) => {
     console.log(error);
   }
 };
-
-BGsetter();
 
 export { BGsetter, locationsWeather };
