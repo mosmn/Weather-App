@@ -24,7 +24,6 @@ const locationsWeather = async (location) => {
       { mode: "cors" }
     );
     const weather = await response.json();
-    console.log(weather);
     return weather;
   } catch (error) {
     console.log(error);
