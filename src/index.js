@@ -20,7 +20,7 @@ const BGsetter = async (condition) => {
 const locationsWeather = async (location) => {
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/current.json?key=c40142647fab4af380442559231506&q=${location}&days=10`,
+      `http://api.weatherapi.com/v1/forecast.json?key=c40142647fab4af380442559231506&q=${location}&days=10`,
       { mode: "cors" }
     );
     const weather = await response.json();
