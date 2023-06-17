@@ -36,7 +36,5 @@ const locationsWeather = async (location) => {
 };
 
 BGsetter();
-console.log(locationsWeather("London"));
-
 
 export { BGsetter, locationsWeather };
