@@ -1,13 +1,13 @@
 import "./style.css";
 import { BGsetter, locationsWeather } from "./index";
 
-const CreateNewElement = (tag, className) => {
+const createNewElement = (tag, className) => {
   const element = document.createElement(tag);
   element.className = className;
   return element;
 };
 
-const weatherSearch = () => {
+const searchWeather = async () => {
   const searchBtn = document.querySelector(".search-btn");
   const searchInput = document.querySelector(".search-input");
 
@@ -15,23 +15,23 @@ const weatherSearch = () => {
     const location = searchInput.value;
     try {
       const weather = await locationsWeather(location);
-      updateWeatherInfo(weather);
       BGsetter(weather.current.condition.text);
+      updateWeatherInfo(weather);
+      updateForecastInfo(weather);
     } catch (error) {
       console.log(error);
     }
   });
 };
 
-const defaultWeather = () => {
-  locationsWeather("New York")
-    .then((weather) => {
-      updateWeatherInfo(weather);
-      BGsetter(weather.current.condition.text);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+const defaultWeather = async () => {
+  try {
+    const weather = await locationsWeather("New York");
+    updateWeatherInfo(weather);
+    BGsetter(weather.current.condition.text);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const updateWeatherInfo = (weather) => {
@@ -42,7 +42,7 @@ const updateWeatherInfo = (weather) => {
   if (weatherInfoContainer) {
     weatherInfoContainer.remove();
   }
-  const weatherInfoContainerNew = CreateNewElement(
+  const weatherInfoContainerNew = createNewElement(
     "div",
     "weather-info-container"
   );
@@ -51,7 +51,7 @@ const updateWeatherInfo = (weather) => {
 };
 
 const weatherInfo = (weather) => {
-  const weatherInfo = CreateNewElement("div", "weather-info");
+  const weatherInfo = createNewElement("div", "weather-info");
   weatherInfo.innerHTML = `
       <div class="weather-info__location">
           <h1 class="weather-info__location-region">${weather.location.region}</h1>
@@ -68,109 +68,76 @@ const weatherInfo = (weather) => {
   return weatherInfo;
 };
 
-const forecastSearch = () => {
-    const searchBtn = document.querySelector(".search-btn");
-    const searchInput = document.querySelector(".search-input");
+const searchForecast = async () => {
+  const searchBtn = document.querySelector(".search-btn");
+  const searchInput = document.querySelector(".search-input");
 
-    searchBtn.addEventListener("click", async () => {
-        const location = searchInput.value;
-        try {
-            const weather = await locationsWeather(location);
-            updateForecastInfo(weather);
-        } catch (error) {
-            console.log(error);
-        }
-    });
+  searchBtn.addEventListener("click", async () => {
+    const location = searchInput.value;
+    try {
+      const weather = await locationsWeather(location);
+      updateForecastInfo(weather);
+    } catch (error) {
+      console.log(error);
+    }
+  });
 };
 
-const defaultForecast = () => {
-    locationsWeather("New York")
-        .then((weather) => {
-            updateForecastInfo(weather);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+const defaultForecast = async () => {
+  try {
+    const weather = await locationsWeather("New York");
+    updateForecastInfo(weather);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const updateForecastInfo = (weather) => {
-    const container = document.querySelector(".container");
-    const forecastInfoContainer = document.querySelector(".forecast-container");
-    if (forecastInfoContainer) {
-        forecastInfoContainer.remove();
-    }
-    const forecastInfoContainerNew = CreateNewElement("div", "forecast-container");
-    forecastInfoContainerNew.appendChild(forecastInfo(weather));
-    container.appendChild(forecastInfoContainerNew);
+  const container = document.querySelector(".container");
+  const forecastInfoContainer = document.querySelector(".forecast-container");
+  if (forecastInfoContainer) {
+    forecastInfoContainer.remove();
+  }
+  const forecastInfoContainerNew = createNewElement(
+    "div",
+    "forecast-container"
+  );
+  forecastInfoContainerNew.appendChild(forecastInfo(weather));
+  container.appendChild(forecastInfoContainerNew);
 };
 
 const forecastInfo = (weather) => {
-    const forecast = CreateNewElement("div", "forecast");
-    forecast.innerHTML = `
-        <h1 class="forecast__title">10 Day Forecast</h1>
-        <div class="forecast__container">
-            <div class="forecast__day">
-                <h3 class="forecast__day-name">${weather.forecast.forecastday[0].date}</h3>
-                <img src="${weather.forecast.forecastday[0].day.condition.icon}" alt="${weather.forecast.forecastday[0].day.condition.text}" class="forecast__day-img">
-                <h3 class="forecast__day-temp">${weather.forecast.forecastday[0].day.avgtemp_c}°C</h3>
-            </div>
-            <div class="forecast__day">
-                <h3 class="forecast__day-name">${weather.forecast.forecastday[1].date}</h3>
-                <img src="${weather.forecast.forecastday[1].day.condition.icon}" alt="${weather.forecast.forecastday[1].day.condition.text}" class="forecast__day-img">
-                <h3 class="forecast__day-temp">${weather.forecast.forecastday[1].day.avgtemp_c}°C</h3>
-            </div>
-            <div class="forecast__day">
-                <h3 class="forecast__day-name">${weather.forecast.forecastday[2].date}</h3>
-                <img src="${weather.forecast.forecastday[2].day.condition.icon}" alt="${weather.forecast.forecastday[2].day.condition.text}" class="forecast__day-img">
-                <h3 class="forecast__day-temp">${weather.forecast.forecastday[2].day.avgtemp_c}°C</h3>
-            </div>
-            <div class="forecast__day">
-                <h3 class="forecast__day-name">${weather.forecast.forecastday[3].date}</h3>
-                <img src="${weather.forecast.forecastday[3].day.condition.icon}" alt="${weather.forecast.forecastday[3].day.condition.text}" class="forecast__day-img">
-                <h3 class="forecast__day-temp">${weather.forecast.forecastday[3].day.avgtemp_c}°C</h3>
-            </div>
-            <div class="forecast__day">
-                <h3 class="forecast__day-name">${weather.forecast.forecastday[4].date}</h3>
-                <img src="${weather.forecast.forecastday[4].day.condition.icon}" alt="${weather.forecast.forecastday[4].day.condition.text}" class="forecast__day-img">
-                <h3 class="forecast__day-temp">${weather.forecast.forecastday[4].day.avgtemp_c}°C</h3>
-            </div>
-            <div class="forecast__day">
-                <h3 class="forecast__day-name">${weather.forecast.forecastday[5].date}</h3>
-                <img src="${weather.forecast.forecastday[5].day.condition.icon}" alt="${weather.forecast.forecastday[5].day.condition.text}" class="forecast__day-img">
-                <h3 class="forecast__day-temp">${weather.forecast.forecastday[5].day.avgtemp_c}°C</h3>
-            </div>
-            <div class="forecast__day">
-                <h3 class="forecast__day-name">${weather.forecast.forecastday[6].date}</h3>
-                <img src="${weather.forecast.forecastday[6].day.condition.icon}" alt="${weather.forecast.forecastday[6].day.condition.text}" class="forecast__day-img">
-                <h3 class="forecast__day-temp">${weather.forecast.forecastday[6].day.avgtemp_c}°C</h3>
-            </div>
-            <div class="forecast__day">
-                <h3 class="forecast__day-name">${weather.forecast.forecastday[7].date}</h3>
-                <img src="${weather.forecast.forecastday[7].day.condition.icon}" alt="${weather.forecast.forecastday[7].day.condition.text}" class="forecast__day-img">
-                <h3 class="forecast__day-temp">${weather.forecast.forecastday[7].day.avgtemp_c}°C</h3>
-            </div>
-            <div class="forecast__day">
-                <h3 class="forecast__day-name">${weather.forecast.forecastday[8].date}</h3>
-                <img src="${weather.forecast.forecastday[8].day.condition.icon}" alt="${weather.forecast.forecastday[8].day.condition.text}" class="forecast__day-img">
-                <h3 class="forecast__day-temp">${weather.forecast.forecastday[8].day.avgtemp_c}°C</h3>
-            </div>
-        </div>
-    `;
-    return forecast;
-}
+  const forecast = createNewElement("div", "forecast");
+  forecast.innerHTML = `
+      <h1 class="forecast__title">10 Day Forecast</h1>
+      <div class="forecastdays__container">
+          ${weather.forecast.forecastday
+            .slice(0, 9)
+            .map(
+              (day) => `
+              <div class="forecast__day">
+                  <h3 class="forecast__day-name">${day.date}</h3>
+                  <img src="${day.day.condition.icon}" alt="${day.day.condition.text}" class="forecast__day-img">
+                  <h3 class="forecast__day-temp">${day.day.avgtemp_c}°C</h3>
+              </div>
+          `
+            )
+            .join("")}
+      </div>
+  `;
+  return forecast;
+};
 
-
-const footer = () => {
+const setFooter = () => {
   const footer = document.querySelector(".footer");
   footer.innerHTML = `
     <h3 class="footer__text">Powered by</h3>
     <a href="https://www.weatherapi.com/" title="Free Weather API"><img src="//cdn.weatherapi.com/v4/images/weatherapi_logo.png" alt="Weather data by WeatherAPI.com" border="0"></a>
     `;
-  return footer;
 };
 
 const loadPage = () => {
-  const container = CreateNewElement("div", "container");
+  const container = createNewElement("div", "container");
   container.innerHTML = `
         <div class="search-container">
             <input type="text" class="search-input" placeholder="Search for location">
@@ -182,10 +149,10 @@ const loadPage = () => {
         <div class="other-metrics-container"></div>
         `;
   document.body.appendChild(container);
-  weatherSearch();
+  searchWeather();
   defaultWeather();
   defaultForecast();
-  footer();
+  setFooter();
 };
 
 document.addEventListener("DOMContentLoaded", loadPage);

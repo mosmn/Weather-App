@@ -126,6 +126,36 @@ input::placeholder {
   align-self: flex-start;
 }
 
+.forecast-container {
+  grid-area: forcast;
+  padding: 2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  margin: 1rem;
+  backdrop-filter: blur(7px);
+}
+
+.forecast {
+  width: 100%;
+}
+
+.forecast__title {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  border-bottom: #fff 1px solid;
+}
+
+.forecast__day {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: #fff 1px solid;
+}
+
+.forecast__day:last-child {
+  border-bottom: none;
+}
+
 .footer {
   grid-area: footer;
   display: flex;
