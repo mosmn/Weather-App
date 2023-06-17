@@ -33,9 +33,101 @@ body {
 }
 
 .container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 60px 0.5fr 1fr 60px;
+    grid-template-areas:
+      "header header"
+      "main main"
+      "forcast other"
+      "footer footer";
+    height: 100vh;
 }
 
-footer {
+.search-container {
+    grid-area: header;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    text-align: center;
+    font-size: 1rem;
+  }
+  
+  input {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    background-color: transparent;
+    outline: none;
+    padding: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  input:focus {
+    border-color: #6c63ff;
+  }
+  
+  input::placeholder {
+    color: #999;
+  }
+
+.weather-info-container {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .weather-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+    font-size: 1rem;
+    backdrop-filter: blur(7px);
+    border-radius: 8px;
+    margin: 1rem;
+    width: 35%;
+    backdrop-filter: blur(7px);
+  }
+  
+  .weather-info__temp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .weather-info__temp-value {
+    font-size: 3rem;
+    font-weight: 100;
+  }
+
+  .weather-info__temp-unit {
+    align-self: flex-start;
+  }
+
+  .weather-info__condition {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .weather-info__condition-img {
+    width: 50px;
+    height: 50px;
+    align-self: flex-start;
+  }
+  
+
+.footer {
   grid-area: footer;
   display: flex;
   justify-content: center;
@@ -45,5 +137,6 @@ footer {
   color: #fff;
   padding: 2rem 0;
   text-align: center;
+  font-size: 1rem;
   backdrop-filter: blur(7px);
 }
