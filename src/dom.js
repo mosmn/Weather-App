@@ -268,9 +268,16 @@ const loadingScreen = () => {
   loadingScreen.innerHTML = `
       <div class="loading-screen__container">
           <div class="loading-screen__circle"></div>
-          <h3 class="loading-screen__text">Loading...</h3>
+          <h3 class="loading-screen__text">Loading.</h3>
       </div>
     `;
+    const loadingText = document.querySelector('.loading-screen__text');
+    setInterval(() => {
+      loadingText.textContent += '.';
+      if (loadingText.textContent.length > 13) {
+        loadingText.textContent = 'Loading.';
+      }
+    }, 500);
   document.body.appendChild(loadingScreen);
 };
 
