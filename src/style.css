@@ -100,6 +100,53 @@ input::placeholder {
   color: #999;
 }
 
+.unit-convertor-toggle {
+    display: inline-block;
+  }
+  
+  .unit-convertor-toggle__checkbox {
+    display: none;
+  }
+  
+  .unit-convertor-toggle__label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #ccc;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .unit-convertor-toggle__text {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0 10px;
+  }
+  
+  .unit-convertor-toggle__slider {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: transform 0.3s;
+  }
+  
+  .unit-convertor-toggle__checkbox:checked + .unit-convertor-toggle__label {
+    background-color: #2196f3;
+  }
+  
+  .unit-convertor-toggle__checkbox:checked + .unit-convertor-toggle__label .unit-convertor-toggle__slider {
+    transform: translateX(40px);
+  }
+  
 .weather-info-container {
   grid-area: main;
   display: flex;
@@ -185,6 +232,14 @@ input::placeholder {
   border-bottom: #fff 1px solid;
 }
 
+.forecast__day-temp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+    width: 50px;
+}
+
 .forecast__day:last-child {
   border-bottom: none;
 }
@@ -192,10 +247,10 @@ input::placeholder {
 .other-metrics-container {
   grid-area: other;
   padding: 2rem;
-  font-size: 1rem;
   border-radius: 8px;
   margin: 1rem;
-  width: 80%;
+  width: 100%;
+  height: 100%;
   justify-self: center;
   align-self: center;
 }
@@ -208,6 +263,8 @@ input::placeholder {
   grid-template-areas:
     "humidity wind"
     "pressure visibility";
+    width: 100%;
+    height: 100%;
 }
 
 .other-metrics > div {
@@ -217,7 +274,7 @@ input::placeholder {
   align-items: center;
   gap: 1.5rem;
   width: 100%;
-  height: 200px;
+  height: 100%;
   border-radius: 8px;
   padding: 1rem;
   backdrop-filter: blur(7px);

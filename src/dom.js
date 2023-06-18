@@ -119,7 +119,10 @@ const forecastInfo = (weather) => {
               <div class="forecast__day">
                   <h3 class="forecast__day-name">${day.date}</h3>
                   <img src="${day.day.condition.icon}" alt="${day.day.condition.text}" class="forecast__day-img">
-                  <h3 class="forecast__day-temp">${day.day.avgtemp_c}°C</h3>
+                  <div class="forecast__day-temp">
+                    <h3 class="forecast__day-temp-value">${day.day.avgtemp_c}</h3>
+                    <h3 class="weather-info__temp-unit">°C</h3>
+                  </div>
               </div>
           `
             )
@@ -192,6 +195,37 @@ const otherMetricsInfo = (weather) => {
   return otherMetrics;
 };
 
+//forecast__day-temp-value
+//weather-info__temp-value
+//weather-info__temp-unit
+const unitTogger = () => {
+    const currentWeatherTemp = document.querySelector(".weather-info__temp-value");
+    const forecastWeatherTemp = document.querySelectorAll(".forecast__day-temp-value");
+    const currentUnit = document.querySelector(".weather-info__temp-unit");
+
+    if (currentUnit.textContent === "°C") {
+        currentWeatherTemp.textContent = Math.round((currentWeatherTemp.textContent * 9/5) + 32);
+        currentUnit.textContent = "°F";
+        forecastWeatherTemp.forEach(temp => {
+            temp.textContent = Math.round((temp.textContent * 9/5) + 32);
+        });
+    }
+    else {
+        currentWeatherTemp.textContent = Math.round((currentWeatherTemp.textContent - 32) * 5/9);
+        currentUnit.textContent = "°C";
+        forecastWeatherTemp.forEach(temp => {
+            temp.textContent = Math.round((temp.textContent - 32) * 5/9);
+        });
+    }
+}
+
+const togglebtn = () => {
+    const toggleBtn = document.querySelector(".unit-convertor-toggle__checkbox");
+    toggleBtn.addEventListener("change", () => {
+        unitTogger();
+    });
+}
+
 const setFooter = () => {
   const footer = document.querySelector(".footer");
   footer.innerHTML = `
@@ -204,6 +238,14 @@ const loadPage = () => {
   const container = createNewElement("div", "container");
   container.innerHTML = `
         <div class="search-container">
+        <div class="unit-convertor-toggle">
+            <input type="checkbox" class="unit-convertor-toggle__checkbox" id="unit-convertor-toggle">
+            <label for="unit-convertor-toggle" class="unit-convertor-toggle__label">
+            <span class="unit-convertor-toggle__text">°F</span>
+            <span class="unit-convertor-toggle__slider"></span>
+            <span class="unit-convertor-toggle__text">°C</span>  
+            </label>
+        </div>
             <input type="text" class="search-input" placeholder="Search for location">
             <img src="https://img.icons8.com/ios-filled/50/000000/search--v1.png" class="search-btn">
         </div>
@@ -214,10 +256,12 @@ const loadPage = () => {
         `;
   document.body.appendChild(container);
   searchWeather();
+  togglebtn();
   defaultWeather();
   defaultForecast();
   defaultOtherMetrics();
   setFooter();
 };
+
 
 document.addEventListener("DOMContentLoaded", loadPage);
