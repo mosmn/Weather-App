@@ -168,21 +168,6 @@ const forecastInfo = (weather) => {
   return forecast;
 };
 
-const searchOtherMetrics = async () => {
-  const searchBtn = document.querySelector(".search-btn");
-  const searchInput = document.querySelector(".search-input");
-
-  searchBtn.addEventListener("click", async () => {
-    const location = searchInput.value;
-    try {
-      const weather = await locationsWeather(location);
-      updateOtherMetricsInfo(weather);
-    } catch (error) {
-      console.log(error);
-    }
-  });
-};
-
 const defaultOtherMetrics = async () => {
   try {
     const weather = await locationsWeather("New York");
