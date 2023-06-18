@@ -10,11 +10,19 @@ Check out the live demo [here](https://your-weather-app-demo-url).
 
 ### Main
 
+![Main](/main.png)
+
 ### Fahrenheit
+
+![Fahrenheit](/f.png)
 
 ### Loading
 
+![Loading](/loading.png)
+
 ### Error
+
+![Error](/error.png)
 
 ## Features
 
