@@ -6,7 +6,9 @@ const BGsetter = async (condition) => {
   const body = document.querySelector("body");
   try {
     const response = await fetch(
-      `https://api.giphy.com/v1/gifs/translate?key=GCTCkoH8uFr2pPeJJWq3CMpzQBn6Ibtv&s=${condition + " weather"}`,
+      `https://api.giphy.com/v1/gifs/translate?key=GCTCkoH8uFr2pPeJJWq3CMpzQBn6Ibtv&s=${
+        condition + " weather"
+      }`,
       { mode: "cors" }
     );
     const cat = await response.json();

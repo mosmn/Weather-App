@@ -271,13 +271,13 @@ const loadingScreen = () => {
           <h3 class="loading-screen__text">Loading.</h3>
       </div>
     `;
-    setInterval(() => {
-      const loadingText = document.querySelector('.loading-screen__text');
-      loadingText.textContent += '.';
-      if (loadingText.textContent.length > 13) {
-        loadingText.textContent = 'Loading.';
-      }
-    }, 100);
+  setInterval(() => {
+    const loadingText = document.querySelector(".loading-screen__text");
+    loadingText.textContent += ".";
+    if (loadingText.textContent.length > 13) {
+      loadingText.textContent = "Loading.";
+    }
+  }, 200);
   document.body.appendChild(loadingScreen);
 };
 
