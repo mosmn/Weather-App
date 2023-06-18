@@ -1,7 +1,3 @@
-//error display
-// farhenheit to celcius and vice versa
-// loading screen
-
 const BGsetter = async (condition) => {
   const createIMG = document.createElement("img");
   createIMG.classList.add("bg-img");
@@ -32,13 +28,4 @@ const locationsWeather = async (location) => {
   }
 };
 
-const unitConverter = (temp, unit) => {
-  if (unit === "°C") {
-    return (temp * 9) / 5 + 32;
-  } else {
-    return ((temp - 32) * 5) / 9;
-  }
-};
-
-
-export { BGsetter, locationsWeather, unitConverter };
+export { BGsetter, locationsWeather };

@@ -13,6 +13,9 @@ const searchWeather = async () => {
 
   searchBtn.addEventListener("click", async () => {
     const location = searchInput.value;
+
+    loadingScreen();
+
     try {
       const weather = await locationsWeather(location);
       BGsetter(weather.current.condition.text);
@@ -21,8 +24,31 @@ const searchWeather = async () => {
       updateOtherMetricsInfo(weather);
     } catch (error) {
       console.log(error);
+      errorDisplay();
     }
+
+    removeLoadingScreen();
   });
+};
+
+const errorDisplay = () => {
+  const errorContainer = document.createElement("div");
+  errorContainer.classList.add("error");
+
+  const errorBox = document.createElement("div");
+  errorBox.classList.add("error__box");
+
+  const errorText = document.createElement("h3");
+  errorText.classList.add("error__text");
+  errorText.textContent = "Please enter a valid location";
+
+  errorBox.appendChild(errorText);
+  errorContainer.appendChild(errorBox);
+  document.body.appendChild(errorContainer);
+
+  setTimeout(() => {
+    errorContainer.remove();
+  }, 1500);
 };
 
 const defaultWeather = async () => {
@@ -121,7 +147,7 @@ const forecastInfo = (weather) => {
                   <img src="${day.day.condition.icon}" alt="${day.day.condition.text}" class="forecast__day-img">
                   <div class="forecast__day-temp">
                     <h3 class="forecast__day-temp-value">${day.day.avgtemp_c}</h3>
-                    <h3 class="weather-info__temp-unit">°C</h3>
+                    <h3 class="forecast-info__temp-unit">°C</h3>
                   </div>
               </div>
           `
@@ -195,36 +221,63 @@ const otherMetricsInfo = (weather) => {
   return otherMetrics;
 };
 
-//forecast__day-temp-value
-//weather-info__temp-value
-//weather-info__temp-unit
 const unitTogger = () => {
-    const currentWeatherTemp = document.querySelector(".weather-info__temp-value");
-    const forecastWeatherTemp = document.querySelectorAll(".forecast__day-temp-value");
-    const currentUnit = document.querySelector(".weather-info__temp-unit");
+  const currentWeatherTemp = document.querySelector(
+    ".weather-info__temp-value"
+  );
+  const forecastWeatherTemp = document.querySelectorAll(
+    ".forecast__day-temp-value"
+  );
+  const weatherUnit = document.querySelectorAll(".weather-info__temp-unit");
+  const forecastUnit = document.querySelectorAll(".forecast-info__temp-unit");
 
-    if (currentUnit.textContent === "°C") {
-        currentWeatherTemp.textContent = Math.round((currentWeatherTemp.textContent * 9/5) + 32);
-        currentUnit.textContent = "°F";
-        forecastWeatherTemp.forEach(temp => {
-            temp.textContent = Math.round((temp.textContent * 9/5) + 32);
-        });
-    }
-    else {
-        currentWeatherTemp.textContent = Math.round((currentWeatherTemp.textContent - 32) * 5/9);
-        currentUnit.textContent = "°C";
-        forecastWeatherTemp.forEach(temp => {
-            temp.textContent = Math.round((temp.textContent - 32) * 5/9);
-        });
-    }
-}
+  if (weatherUnit[0].textContent === "°C") {
+    currentWeatherTemp.textContent = Math.round(
+      (currentWeatherTemp.textContent * 9) / 5 + 32
+    );
+    forecastWeatherTemp.forEach((temp) => {
+      temp.textContent = Math.round((temp.textContent * 9) / 5 + 32);
+    });
+    weatherUnit.forEach((unit) => {
+      unit.textContent = "°F";
+    });
+    forecastUnit.forEach((unit) => {
+      unit.textContent = "°F";
+    });
+  } else {
+    currentWeatherTemp.textContent = Math.round(
+      ((currentWeatherTemp.textContent - 32) * 5) / 9
+    );
+    forecastWeatherTemp.forEach((temp) => {
+      temp.textContent = Math.round(((temp.textContent - 32) * 5) / 9);
+    });
+    weatherUnit.forEach((unit) => {
+      unit.textContent = "°C";
+    });
+    forecastUnit.forEach((unit) => {
+      unit.textContent = "°C";
+    });
+  }
+};
 
 const togglebtn = () => {
-    const toggleBtn = document.querySelector(".unit-convertor-toggle__checkbox");
-    toggleBtn.addEventListener("change", () => {
-        unitTogger();
-    });
-}
+  const toggleBtn = document.querySelector(".unit-convertor-toggle__checkbox");
+  toggleBtn.addEventListener("change", () => {
+    unitTogger();
+  });
+};
+
+const loadingScreen = () => {
+  const loadingScreen = document.createElement("div");
+  loadingScreen.classList.add("loading-screen");
+  loadingScreen.innerHTML = `
+      <div class="loading-screen__container">
+          <div class="loading-screen__circle"></div>
+          <h3 class="loading-screen__text">Loading...</h3>
+      </div>
+    `;
+  document.body.appendChild(loadingScreen);
+};
 
 const setFooter = () => {
   const footer = document.querySelector(".footer");
@@ -234,7 +287,12 @@ const setFooter = () => {
     `;
 };
 
-const loadPage = () => {
+const removeLoadingScreen = () => {
+  const loadingScreen = document.querySelector(".loading-screen");
+  loadingScreen.remove();
+};
+
+const loadPage = async () => {
   const container = createNewElement("div", "container");
   container.innerHTML = `
         <div class="search-container">
@@ -255,13 +313,23 @@ const loadPage = () => {
         <div class="other-metrics-container"></div>
         `;
   document.body.appendChild(container);
-  searchWeather();
   togglebtn();
-  defaultWeather();
-  defaultForecast();
-  defaultOtherMetrics();
+
+  loadingScreen();
+
+  try {
+    await Promise.all([
+      defaultWeather(),
+      defaultForecast(),
+      defaultOtherMetrics(),
+    ]);
+  } catch (error) {
+    console.log(error);
+  }
+
+  removeLoadingScreen();
+  searchWeather();
   setFooter();
 };
-
 
 document.addEventListener("DOMContentLoaded", loadPage);
