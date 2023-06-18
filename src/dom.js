@@ -11,11 +11,8 @@ const searchWeather = async () => {
   const searchBtn = document.querySelector(".search-btn");
   const searchInput = document.querySelector(".search-input");
 
-  searchBtn.addEventListener("click", async () => {
-    const location = searchInput.value;
-
+  const searchLocation = async (location) => {
     loadingScreen();
-
     try {
       const weather = await locationsWeather(location);
       BGsetter(weather.current.condition.text);
@@ -26,8 +23,21 @@ const searchWeather = async () => {
       console.log(error);
       errorDisplay();
     }
-
     removeLoadingScreen();
+  };
+
+  const handleSearch = async () => {
+    const location = searchInput.value;
+    await searchLocation(location);
+  };
+
+  searchBtn.addEventListener("click", handleSearch);
+
+  searchInput.addEventListener("keydown", async (event) => {
+    if (event.key === "Enter") {
+      const location = searchInput.value;
+      await searchLocation(location);
+    }
   });
 };
 

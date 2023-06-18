@@ -8,6 +8,14 @@ Check out the live demo [here](https://your-weather-app-demo-url).
 
 ## Screenshots
 
+### Main
+
+### Fahrenheit
+
+### Loading
+
+### Error
+
 ## Features
 
 - **Location Search**: Users can search for a specific location to retrieve its weather forecast.
