@@ -4,9 +4,8 @@ const BGsetter = async (condition) => {
   const body = document.querySelector("body");
   try {
     const response = await fetch(
-      `https://api.giphy.com/v1/gifs/translate?key=GCTCkoH8uFr2pPeJJWq3CMpzQBn6Ibtv&s=${
-        condition + " weather"
-      }`
+      `https://api.giphy.com/v1/gifs/translate?key=GCTCkoH8uFr2pPeJJWq3CMpzQBn6Ibtv&s=${condition + " weather"}`,
+      { mode: "cors" }
     );
     const cat = await response.json();
     createIMG.src = cat.data.images.original.url;
@@ -19,7 +18,8 @@ const BGsetter = async (condition) => {
 const locationsWeather = async (location) => {
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=c40142647fab4af380442559231506&q=${location}&days=10`
+      `http://api.weatherapi.com/v1/forecast.json?key=c40142647fab4af380442559231506&q=${location}&days=3`,
+      { mode: "cors" }
     );
     const weather = await response.json();
     return weather;
