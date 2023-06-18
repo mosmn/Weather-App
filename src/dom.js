@@ -327,4 +327,4 @@ const loadPage = async () => {
   setFooter();
 };
 
-document.addEventListener("DOMContentLoaded", loadPage);
+loadPage();
